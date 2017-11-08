@@ -23,13 +23,13 @@ const FIRESTORE_TIMESTAMP = Firebase.firestore.FieldValue.serverTimestamp();
 
 module.exports = {
   // TEST: curl -H "Origin: http://hello.com" --verbose https://us-central1-prototype-af43d.cloudfunctions.net/hello_1
-  hello_1: Functions.https.onRequest((req, res) =>
+  hello1: Functions.https.onRequest((req, res) =>
     res.send('Hello World!'),
   ),
 
   // TEST: curl -H "Origin: http://hello.com" --verbose https://us-central1-prototype-af43d.cloudfunctions.net/hello_2
-  hello_2: Functions.https.onRequest((req, res) =>
-    cors(req, res, async () =>
+  hello2: Functions.https.onRequest((req, res) =>
+    cors(req, res, () =>
       res.send('Hello World!'),
     ),
   ),
@@ -42,6 +42,8 @@ module.exports = {
     ),
   ),
 
+
+  // 1
 
   // TEST: curl https://us-central1-prototype-af43d.cloudfunctions.net/weather?city=Barcelona
   // TEST: curl -X POST https://us-central1-prototype-af43d.cloudfunctions.net/weather?city=Barcelona
@@ -57,14 +59,17 @@ module.exports = {
           return res.status(400).send({ status: 400, error: 'Missing query parameter \'city\'.' });
         }
 
-        let result = await request.get({
+        const result = await request.get({
           url: `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=9760204cff9871ed6c7a40e530c83374`,
           json: true,
         });
-        result = { ...result, _source: 'Open Weather Map' };
+        result.source = 'Open Weather Map';
 
-        await Firebase.database().ref(`weather/${city}/results`).push(result);
-        await Firebase.firestore().collection('weather').doc(city).collection('results').add(result);
+        await Firebase.database().ref(`weather/${city}/results`)
+          .push({ ...result, fetched: DATABASE_TIMESTAMP });
+
+        await Firebase.firestore().collection('weather').doc(city).collection('results')
+          .add({ ...result, fetched: FIRESTORE_TIMESTAMP });
 
         return res.status(200).send({ status: 200, result });
       } catch (err) {
@@ -73,17 +78,36 @@ module.exports = {
     }),
   ),
 
-  database_weather_city: Functions.database.ref('weather/{city}').onCreate(event =>
-    event.data.ref.update({ _created: DATABASE_TIMESTAMP }),
-  ),
-  database_weather_city_results_result: Functions.database.ref('weather/{city}/results/{result}').onCreate(event =>
-    event.data.ref.update({ _created: DATABASE_TIMESTAMP }),
+
+  // 2
+
+  databaseWeatherCityCreated: Functions.database.ref('weather/{city}').onCreate(event =>
+    event.data.ref.update({ created: DATABASE_TIMESTAMP }),
   ),
 
-  firestore_weather_city: Functions.firestore.document('weather/{city}').onCreate(event =>
-    event.data.ref.update({ _created: FIRESTORE_TIMESTAMP }),
+  firestoreWeatherCityCreated: Functions.firestore.document('weather/{city}').onCreate(event =>
+    event.data.ref.update({ created: FIRESTORE_TIMESTAMP }),
   ),
-  firestore_weather_city_results_result: Functions.firestore.document('weather/{city}/results/{result}').onCreate(event =>
-    event.data.ref.update({ _created: FIRESTORE_TIMESTAMP }),
+
+
+  // 3
+
+  databaseWeatherResultsCountIncrease: Functions.database.ref('weather/{city}/results/{result}').onCreate(event =>
+    event.data.ref.parent.parent.child('count').transaction(count => (count || 0) + 1),
   ),
+
+  databaseWeatherResultsCountDecrease: Functions.database.ref('weather/{city}/results/{result}').onDelete(async event => {
+    const city = await event.data.ref.parent.parent.once('value');
+    if (city.exists()) {
+      return event.data.ref.parent.parent.child('count').transaction(() => city.child('results').numChildren());
+    }
+  }),
+
+  databaseWeatherResultsCountGuard: Functions.database.ref('weather/{city}/count').onDelete(async event => {
+    const city = await event.data.ref.parent.once('value');
+    if (city.exists()) {
+      // return event.data.ref.transaction(() => event.data.previous.val());
+      return event.data.ref.transaction(() => city.child('results').numChildren());
+    }
+  }),
 };
