@@ -100,7 +100,7 @@ module.exports = {
     Firebase.firestore().runTransaction(async transaction => {
       const city = await transaction.get(event.data.ref.parent.parent);
       const count = (city.exists ? (city.data().count || 0) : 0) + 1;
-      return transaction.set(event.data.ref.parent.parent, { count }, { merge: true });
+      return transaction.set(city.ref, { count }, { merge: true });
     }),
   ),
 
@@ -108,7 +108,7 @@ module.exports = {
   databaseWeatherResultsCountDecrement: Functions.database.ref('weather/{city}/results/{result}').onDelete(async event => {
     const city = await event.data.ref.parent.parent.once('value');
     if (city.exists()) {
-      return event.data.ref.parent.parent.child('count').transaction(() => city.child('results').numChildren());
+      return city.ref.child('count').transaction(() => city.child('results').numChildren());
     }
   }),
 
@@ -116,8 +116,8 @@ module.exports = {
     Firebase.firestore().runTransaction(async transaction => {
       const city = await transaction.get(event.data.ref.parent.parent);
       if (city.exists) {
-        const count = (await city.ref.collection('results').get()).size;
-        return transaction.set(event.data.ref.parent.parent, { count }, { merge: true });
+        const count = (await transaction.get(city.ref.collection('results'))).size;
+        return transaction.set(city.ref, { count }, { merge: true });
       }
     }),
   ),
@@ -126,17 +126,17 @@ module.exports = {
   databaseWeatherResultsCountGuard: Functions.database.ref('weather/{city}/count').onDelete(async event => {
     const city = await event.data.ref.parent.once('value');
     if (city.exists()) {
-      return event.data.ref.transaction(() => city.child('results').numChildren());
+      return city.ref.child('count').transaction(() => city.child('results').numChildren());
     }
   }),
 
   firestoreWeatherResultsCountGuard: Functions.firestore.document('weather/{city}').onUpdate(event => {
     if (event.data.previous.data().count !== undefined && event.data.data().count === undefined) {
       return Firebase.firestore().runTransaction(async transaction => {
-        // TODO:
-        const count = (await event.data.ref.firestore.collection('results').get()).size;
-        return transaction.update(event.data.ref.parent.parent, { count });
+        const count = (await transaction.get(event.data.ref.collection('results'))).size;
+        return transaction.update(event.data.ref, { count });
       });
     }
+    return null;
   }),
 };
