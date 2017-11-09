@@ -1,4 +1,4 @@
-# firebase-functions-api
+# firebase-functions
 
 ## Setup
 1. Install [Node.js](https://nodejs.org/en/download/)
