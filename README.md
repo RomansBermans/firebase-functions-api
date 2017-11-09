@@ -27,4 +27,4 @@ https://us-central1-prototype-af43d.cloudfunctions.net/weather?city=Barcelona
 
 ## Learn More
 
-[Firebase Cloud Functions](https://firebase.google.com/docs/functions/)
+[Cloud Functions For Firebase](https://firebase.google.com/docs/functions/)
