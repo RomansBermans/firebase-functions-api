@@ -22,12 +22,12 @@ const FIRESTORE_TIMESTAMP = Firebase.firestore.FieldValue.serverTimestamp();
 
 
 module.exports = {
-  // TEST: curl -H "Origin: http://hello.com" --verbose https://us-central1-prototype-af43d.cloudfunctions.net/hello1
+  // curl -H "Origin: http://test.com" --verbose https://us-central1-prototype-af43d.cloudfunctions.net/hello1
   hello1: Functions.https.onRequest((req, res) =>
     res.send('Hello 1'),
   ),
 
-  // TEST: curl -H "Origin: http://hello.com" --verbose https://us-central1-prototype-af43d.cloudfunctions.net/hello2
+  // curl -H "Origin: http://test.com" --verbose https://us-central1-prototype-af43d.cloudfunctions.net/hello2
   hello2: Functions.https.onRequest((req, res) =>
     cors(req, res, () =>
       res.send('Hello 2'),
@@ -35,7 +35,7 @@ module.exports = {
   ),
 
 
-  // TEST: curl https://us-central1-prototype-af43d.cloudfunctions.net/date?format=DD-MM-YYYY%20HH:mm:ss
+  // curl https://us-central1-prototype-af43d.cloudfunctions.net/date?format=DD-MM-YYYY%20HH:mm:ss
   date: Functions.https.onRequest((req, res) =>
     cors(req, res, () =>
       res.send(moment().format(req.query.format)),
@@ -45,8 +45,9 @@ module.exports = {
 
   // 1
 
-  // TEST: curl https://us-central1-prototype-af43d.cloudfunctions.net/weather?city=Barcelona
-  // TEST: curl -X POST https://us-central1-prototype-af43d.cloudfunctions.net/weather?city=Barcelona
+  // curl -X POST https://us-central1-prototype-af43d.cloudfunctions.net/weather
+  // curl https://us-central1-prototype-af43d.cloudfunctions.net/weather
+  // curl https://us-central1-prototype-af43d.cloudfunctions.net/weather?city=Barcelona
   weather: Functions.https.onRequest((req, res) =>
     cors(req, res, async () => {
       try {
