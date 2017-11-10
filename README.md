@@ -10,10 +10,27 @@
 npm install
 ```
 
+## Test
+```
+npm test
+```
+
+## Configure
+```
+npm run config:get
+OPEN_WEATHER_MAP_KEY={KEY} npm run config:set
+```
+
+## Build
+```
+npm run build
+npm run build:watch
+```
+
 ## Start
 ```
 npm start
-npm run start:experimental
+npm run start:shell
 ```
 
 ## Deploy

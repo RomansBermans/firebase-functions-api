@@ -5,7 +5,6 @@ const Firebase = require('firebase-admin');
 const Functions = require('firebase-functions');
 
 const cors = require('cors')({ origin: true });
-const moment = require('moment');
 const request = require('request-promise-native');
 
 
@@ -34,11 +33,10 @@ module.exports = {
     ),
   ),
 
-
-  // curl https://us-central1-prototype-af43d.cloudfunctions.net/date?format=DD-MM-YYYY%20HH:mm:ss
-  date: Functions.https.onRequest((req, res) =>
+  // curl -H "Origin: http://test.com" --verbose https://us-central1-prototype-af43d.cloudfunctions.net/hello3?text=World
+  hello3: Functions.https.onRequest((req, res) =>
     cors(req, res, () =>
-      res.send(moment().format(req.query.format)),
+      res.send({ message: `Hello ${req.query.text || '3'}` }),
     ),
   ),
 
@@ -61,20 +59,17 @@ module.exports = {
         }
 
         const result = await request.get({
-          url: `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=9760204cff9871ed6c7a40e530c83374`,
+          url: `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${Functions.config().openweathermap.key}`,
           json: true,
         });
         result.source = 'Open Weather Map';
 
-        await Firebase.database().ref(`weather/${city}/results`)
-          .push({ ...result, fetched: DATABASE_TIMESTAMP });
-
-        await Firebase.firestore().collection('weather').doc(city).collection('results')
-          .add({ ...result, fetched: FIRESTORE_TIMESTAMP });
+        await Firebase.database().ref(`weather/${city}/results`).push({ ...result, fetched: DATABASE_TIMESTAMP });
+        await Firebase.firestore().collection('weather').doc(city).collection('results').add({ ...result, fetched: FIRESTORE_TIMESTAMP });
 
         return res.status(200).send({ status: 200, result });
-      } catch (err) {
-        return res.status(500).send({ status: 500, error: err.message });
+      } catch (error) {
+        return res.status(500).send({ status: 500, error: error.message });
       }
     }),
   ),
@@ -138,6 +133,5 @@ module.exports = {
         return transaction.update(event.data.ref, { count });
       });
     }
-    return null;
   }),
 };

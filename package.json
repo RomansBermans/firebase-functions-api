@@ -2,17 +2,20 @@
   "name": "firebase-functions",
   "version": "1.0.0",
   "scripts": {
-    "build": "babel index.es2017.js -o index.js",
-    "build:watch": "babel -w index.es2017.js -o index.js",
-
     "pretest": "eslint index.es2017.js",
     "test": ":",
 
-    "prestart": "npm run build:watch &",
+    "config:get": "firebase functions:config:get",
+    "config:set": "firebase functions:config:set openweathermap.key=\"$OPEN_WEATHER_MAP_KEY\"",
+
+    "build": "babel index.es2017.js -o index.js",
+    "build:watch": "babel -w index.es2017.js -o index.js",
+
+    "prestart": "firebase functions:config:get > .runtimeconfig.json && npm run build:watch &",
     "start": "firebase serve --only functions",
 
-    "prestart:experimental": "npm run build:watch &",
-    "start:experimental": "firebase experimental:functions:shell",
+    "prestart:shell": "firebase functions:config:get > .runtimeconfig.json && npm run build:watch &",
+    "start:shell": "firebase experimental:functions:shell",
 
     "predeploy": "npm run build",
     "deploy": "firebase deploy --only functions"
@@ -21,7 +24,6 @@
     "cors": "^2.8.4",
     "firebase-admin": "^5.4.3",
     "firebase-functions": "^0.7.2",
-    "moment": "^2.19.1",
     "request": "^2.83.0",
     "request-promise-native": "^1.0.5"
   },
@@ -36,7 +38,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:RomansBermans/firebase-functions.git"
+    "url": "https://github.com/RomansBermans/firebase-functions.git"
   },
   "contributors": [
     {

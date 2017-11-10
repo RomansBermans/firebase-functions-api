@@ -2,6 +2,7 @@
 
 node_modules/
 
+.runtimeconfig.json
 index.js
 
 *.log
