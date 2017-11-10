@@ -10,15 +10,15 @@
 npm install
 ```
 
-## Test
-```
-npm test
-```
-
 ## Configure
 ```
 npm run config:get
 OPEN_WEATHER_MAP_KEY={KEY} npm run config:set
+```
+
+## Test
+```
+npm test
 ```
 
 ## Build

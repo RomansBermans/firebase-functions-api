@@ -2,11 +2,11 @@
   "name": "firebase-functions",
   "version": "1.0.0",
   "scripts": {
-    "pretest": "eslint index.es2017.js",
-    "test": ":",
-
     "config:get": "firebase functions:config:get",
     "config:set": "firebase functions:config:set openweathermap.key=\"$OPEN_WEATHER_MAP_KEY\"",
+
+    "pretest": "eslint index.es2017.js",
+    "test": ":",
 
     "build": "babel index.es2017.js -o index.js",
     "build:watch": "babel -w index.es2017.js -o index.js",
