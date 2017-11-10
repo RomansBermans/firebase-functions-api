@@ -133,5 +133,6 @@ module.exports = {
         return transaction.update(event.data.ref, { count });
       });
     }
+    return null;
   }),
 };
