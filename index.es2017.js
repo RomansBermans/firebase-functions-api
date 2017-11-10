@@ -127,10 +127,11 @@ module.exports = {
   }),
 
   firestoreWeatherResultsCountGuard: Functions.firestore.document('weather/{city}').onUpdate(event => {
-    if (event.data.previous.data().count !== undefined && event.data.data().count === undefined) {
+    const city = event.data;
+    if (city.previous.data().count !== undefined && city.data().count === undefined) {
       return Firebase.firestore().runTransaction(async transaction => {
-        const count = (await transaction.get(event.data.ref.collection('results'))).size;
-        return transaction.update(event.data.ref, { count });
+        const count = (await transaction.get(city.ref.collection('results'))).size;
+        return transaction.update(city.ref, { count });
       });
     }
     return null;
