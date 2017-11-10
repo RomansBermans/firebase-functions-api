@@ -45,4 +45,4 @@ https://us-central1-prototype-af43d.cloudfunctions.net/weather?city=Barcelona
 https://docs.google.com/presentation/d/1AsdVp4h--GrEcTDTAi0praoS42e5YAvP5Pszy-_tdcw
 
 ## Learn More
-[Cloud Functions For Firebase](https://firebase.google.com/docs/functions/)
+[Firebase Cloud Functions](https://firebase.google.com/docs/functions/)
