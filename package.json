@@ -1,29 +1,24 @@
 {
-  "name": "firebase-functions",
+  "name": "firebase-functions-api",
   "version": "1.0.0",
   "scripts": {
     "config:get": "firebase functions:config:get",
     "config:set": "firebase functions:config:set openweathermap.key=\"$OPEN_WEATHER_MAP_KEY\"",
-
     "pretest": "eslint --ext .js .",
     "test": ":",
-
     "build": "babel index.es2017.js -o index.js",
     "build:watch": "babel -w index.es2017.js -o index.js",
-
     "prestart": "firebase functions:config:get > .runtimeconfig.json && npm run build:watch &",
     "start": "firebase serve --only functions",
-
     "prestart:shell": "firebase functions:config:get > .runtimeconfig.json && npm run build:watch &",
     "start:shell": "firebase experimental:functions:shell",
-
     "predeploy": "npm run build",
     "deploy": "firebase deploy --only functions"
   },
   "dependencies": {
     "cors": "^2.8.4",
-    "firebase-admin": "^5.4.3",
-    "firebase-functions": "^0.7.2",
+    "firebase-admin": "^5.5.0",
+    "firebase-functions": "^0.7.3",
     "request": "^2.83.0",
     "request-promise-native": "^1.0.5"
   },
@@ -31,14 +26,14 @@
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2017": "^6.24.1",
-    "eslint": "^4.10.0",
+    "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "firebase-tools": "^3.14.0"
+    "firebase-tools": "^3.15.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/RomansBermans/firebase-functions.git"
+    "url": "https://github.com/RomansBermans/firebase-functions-api.git"
   },
   "contributors": [
     {
