@@ -2,7 +2,7 @@
 
 node_modules/
 
-.runtimeconfig.json
-index.js
+/.runtimeconfig.json
+/index.js
 
 *.log

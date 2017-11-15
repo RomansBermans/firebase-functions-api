@@ -4,14 +4,23 @@
   "scripts": {
     "config:get": "firebase functions:config:get",
     "config:set": "firebase functions:config:set openweathermap.key=\"$OPEN_WEATHER_MAP_KEY\"",
+
+
     "pretest": "eslint --ext .js .",
     "test": ":",
+
+
     "build": "babel index.es2017.js -o index.js",
     "build:watch": "babel -w index.es2017.js -o index.js",
+
+
     "prestart": "firebase functions:config:get > .runtimeconfig.json && npm run build:watch &",
     "start": "firebase serve --only functions",
+
     "prestart:shell": "firebase functions:config:get > .runtimeconfig.json && npm run build:watch &",
     "start:shell": "firebase experimental:functions:shell",
+
+
     "predeploy": "npm run build",
     "deploy": "firebase deploy --only functions"
   },
@@ -35,10 +44,10 @@
     "type": "git",
     "url": "https://github.com/RomansBermans/firebase-functions-api.git"
   },
-  "contributors": [
-    {
-      "name": "Romans Bermans",
-      "email": "romans.bermans@gmail.com"
-    }
-  ]
+  "bugs": {
+    "url": "https://github.com/RomansBermans/firebase-functions-api/issues"
+  },
+  "homepage": "https://github.com/RomansBermans/firebase-functions-api",
+  "author": "Romans Bermans <romans.bermans@gmail.com>",
+  "license": "ISC"
 }
