@@ -10,5 +10,5 @@ module.exports = {
     'function-paren-newline': 'off',
     'max-len': [ 'error', 240 ],
     'newline-per-chained-call': 'off',
-  }
-}
+  },
+};
