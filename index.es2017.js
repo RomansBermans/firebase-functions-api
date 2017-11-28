@@ -21,6 +21,8 @@ const FIRESTORE_TIMESTAMP = Firebase.firestore.FieldValue.serverTimestamp();
 
 
 module.exports = {
+  // 1
+
   // curl -H "Origin: http://test.com" --verbose https://us-central1-prototype-af43d.cloudfunctions.net/hello1
   hello1: Functions.https.onRequest((req, res) =>
     res.send('Hello 1'),
@@ -41,7 +43,7 @@ module.exports = {
   ),
 
 
-  // 1
+  // 2
 
   // curl -X POST https://us-central1-prototype-af43d.cloudfunctions.net/weather
   // curl https://us-central1-prototype-af43d.cloudfunctions.net/weather
@@ -75,7 +77,7 @@ module.exports = {
   ),
 
 
-  // 2
+  // 3
 
   databaseWeatherCityCreated: Functions.database.ref('weather/{city}').onCreate(event =>
     event.data.ref.update({ created: DATABASE_TIMESTAMP }),
@@ -86,7 +88,7 @@ module.exports = {
   ),
 
 
-  // 3
+  // 4
 
   databaseWeatherResultsCountIncrement: Functions.database.ref('weather/{city}/results/{result}').onCreate(event =>
     event.data.ref.parent.parent.child('count').transaction(count => (count || 0) + 1),
