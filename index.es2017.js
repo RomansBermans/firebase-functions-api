@@ -110,7 +110,7 @@ module.exports = {
   databaseWeatherResultsCountDecrement: Functions.database.ref('weather/{city}/results/{result}').onDelete(async event => {
     const city = await event.data.ref.parent.parent.once('value');
     if (city.exists()) {
-      return city.ref.child('count').transaction(() => city.child('results').numChildren());
+      return city.ref.child('count').transaction(count => (count || 1) - 1);
     }
   }),
 
@@ -118,7 +118,7 @@ module.exports = {
     Firebase.firestore().runTransaction(async transaction => {
       const city = await transaction.get(event.data.ref.parent.parent);
       if (city.exists) {
-        const count = (await transaction.get(city.ref.collection('results'))).size;
+        const count = (city.data().count || 1) - 1;
         return transaction.set(city.ref, { count }, { merge: true });
       }
     }),
