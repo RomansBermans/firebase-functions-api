@@ -23,11 +23,13 @@ const FIRESTORE_TIMESTAMP = Firebase.firestore.FieldValue.serverTimestamp();
 module.exports = {
   // 1
 
+  // firebase deploy --only functions:hello1
   // curl -H "Origin: http://test.com" --verbose https://us-central1-prototype-af43d.cloudfunctions.net/hello1
   hello1: Functions.https.onRequest((req, res) =>
     res.send('Hello 1'),
   ),
 
+  // firebase deploy --only functions:hello2
   // curl -H "Origin: http://test.com" --verbose https://us-central1-prototype-af43d.cloudfunctions.net/hello2
   hello2: Functions.https.onRequest((req, res) =>
     cors(req, res, () =>
@@ -35,6 +37,7 @@ module.exports = {
     ),
   ),
 
+  // firebase deploy --only functions:hello3
   // curl -H "Origin: http://test.com" --verbose https://us-central1-prototype-af43d.cloudfunctions.net/hello3?text=World
   hello3: Functions.https.onRequest((req, res) =>
     cors(req, res, () =>
@@ -45,6 +48,7 @@ module.exports = {
 
   // 2
 
+  // firebase deploy --only functions:weather
   // curl -X POST https://us-central1-prototype-af43d.cloudfunctions.net/weather
   // curl https://us-central1-prototype-af43d.cloudfunctions.net/weather
   // curl https://us-central1-prototype-af43d.cloudfunctions.net/weather?city=Barcelona
