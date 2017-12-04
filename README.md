@@ -1,6 +1,6 @@
 # firebase-functions-api
 
-Get started with Cloud Functions For Firebase, Firebase Realtime Database and Firestore.
+Get started with Cloud Functions For Firebase, Firebase Realtime Database and Cloud Firestore.
 
 ## Setup
 1. Install [Node.js](https://nodejs.org/en/download/)
