@@ -48,8 +48,8 @@ https://docs.google.com/presentation/d/1AsdVp4h--GrEcTDTAi0praoS42e5YAvP5Pszy-_t
 
 ## Learn More
 
-[Firebase Cloud Functions](https://firebase.google.com/docs/functions/)
+[Firebase Realtime Database](https://firebase.google.com/docs/database/)
 
 [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore/)
 
-[Firebase Realtime Database](https://firebase.google.com/docs/database/)
+[Firebase Cloud Functions](https://firebase.google.com/docs/functions/)
