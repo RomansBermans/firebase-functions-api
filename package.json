@@ -26,8 +26,8 @@
   },
   "dependencies": {
     "cors": "^2.8.4",
-    "firebase-admin": "^5.5.1",
-    "firebase-functions": "^0.7.3",
+    "firebase-admin": "^5.8.2",
+    "firebase-functions": "^0.8.1",
     "request": "^2.83.0",
     "request-promise-native": "^1.0.5"
   },
@@ -35,10 +35,10 @@
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2017": "^6.24.1",
-    "eslint": "^4.13.1",
+    "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "firebase-tools": "^3.16.0"
+    "firebase-tools": "^3.17.4"
   },
   "repository": {
     "type": "git",
