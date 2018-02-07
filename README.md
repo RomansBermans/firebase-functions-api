@@ -44,7 +44,7 @@ npm run deploy
 https://us-central1-prototype-af43d.cloudfunctions.net/weather?city=Barcelona
 
 ## Presentation
-https://docs.google.com/presentation/d/1AsdVp4h--GrEcTDTAi0praoS42e5YAvP5Pszy-_tdcw
+https://goo.gl/6oRm8t
 
 ## Learn More
 
