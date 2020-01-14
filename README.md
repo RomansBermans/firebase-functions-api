@@ -40,9 +40,6 @@ npm run start:shell
 npm run deploy
 ```
 
-## Demo
-https://us-central1-prototype-af43d.cloudfunctions.net/weather?city=Barcelona
-
 ## Presentation
 https://goo.gl/6oRm8t
 
